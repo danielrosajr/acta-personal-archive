@@ -1,4 +1,4 @@
-# ACTA — Testes e verificações (v0.1.0-alpha)
+# ACTA — Testes e verificações (v0.2.0-alpha)
 
 ## O que foi executado no ambiente desta entrega
 
@@ -36,3 +36,12 @@ npm run check
 ```
 
 Os testes principais estão em `src/tests/` e podem ser ampliados com cenários de navegador usando Playwright quando um ambiente com acesso à aplicação estiver disponível.
+
+
+## Verificações adicionais da v0.2.0-alpha
+
+- **18 testes automatizados** passaram em 2026-10-26: identificadores, vínculos, buscas, schema 1 → 2, categorias/cores, aniversários, arquétipos, tags, histórico de percentuais, referências a eventos/memórias e criptografia de backup.
+- Executadas interações no **Chromium em uma montagem isolada** dos módulos JavaScript/CSS: criação de ficha, seleção de símbolo e categorias, nascimento sem ano, arquétipo, tag, registro de proximidade, visualização do ranking, filtros de arquétipo/tag, Dashboard e navegação do tutorial.
+- O mesmo teste isolado foi repetido num viewport móvel de **390 × 844 px**; navegação, formulários, ranking e tutorial funcionaram sem rolagem horizontal.
+- **Limitações:** a montagem de navegador não roda em uma origem HTTP confiável do site: a execução Chromium com URL HTTP/file é bloqueada neste ambiente. Portanto **não foi validada persistência IndexedDB em página servida, migração real de dados do navegador, service worker, `npm run build`, publicação efetiva GitHub Pages**. Testes unitários da migração/backup passaram; verifique integração após publicar. A montagem do navegador testou o estado em memória.
+- `npm run check` verifica testes e sintaxe do código. No GitHub Actions, `npm install`, `npm run check` e `npm run build` são executados no servidor do GitHub.

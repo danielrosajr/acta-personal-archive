@@ -1,6 +1,6 @@
 # ACTA ◈ Arquivo Narrativo da Vida
 
-**ACTA v0.1.0-alpha — The Personal Codex**
+**ACTA v0.2.0-alpha — Codex Evolved**
 
 A private-first narrative life archive with acts, chapters, memories, missions and a personal codex of meaningful people.
 
@@ -8,9 +8,21 @@ O ACTA é um aplicativo web **local-first** para narrar a própria vida em atos,
 
 > **Aviso de privacidade importante:** IndexedDB não é criptografado. Pessoas que utilizem o mesmo perfil de navegador ou scripts de outras páginas com a mesma origem podem acessar registros locais. Em especial, sites GitHub Pages sob `https://usuario.github.io/` compartilham a **mesma origem**, mesmo em diferentes repositórios/caminhos. Para informações realmente sensíveis, use uma origem exclusiva (por exemplo, um domínio dedicado) e avalie aguardar armazenamento criptografado de ponta a ponta. Faça backups criptografados e preserve a senha.
 
+## Atualização da versão anterior (sem perder o arquivo)
+
+**Antes de atualizar:** abra a v0.1.0-alpha já publicada e exporte um **backup criptografado** em Configurações. Salve-o fora do repositório. Depois envie os arquivos da v0.2.0-alpha para **o mesmo repositório**, mantendo o mesmo endereço/origem, e execute o workflow. O ACTA detecta registros locais antigos (schema 1), migra para **schema 2** e conserva códigos, IDs, capítulos, memórias e aliases. Backups ACTA schema 1 também são aceitos na restauração. A atualização do código pelo GitHub não transfere suas memórias para um novo dispositivo, perfil ou domínio.
+
+**Importante:** migração é automática, mas não substitui o backup prévio. Se o navegador remover dados locais, eles não serão recuperáveis sem backup. Ao migrar, as cores antigas personalizadas são preservadas; selecione “cor por vínculo principal” na ficha para ativar os novos padrões.
+
 ## O que funciona nesta versão
 
 - **ACTA Codex:** criar, editar e excluir fichas; códigos exclusivos; sugestão sequencial por prefixo; códigos históricos após renomeação; codinome principal e histórico de apelidos; status, múltiplas categorias, símbolo e cor; foto local compactada; descrições, período incerto, observações e reflexões datadas.
+- **Cores por vínculo:** padrões editáveis para Família, Amizade, Relacionamento etc.; múltiplas categorias e escolha de uma categoria principal; cor manual opcional.
+- **Datas de nascimento:** ano opcional (`MM-DD` ou `AAAA-MM-DD`) e avisos no Dashboard dentro do horizonte de 7/14/30/60 dias. Os avisos só aparecem ao abrir o ACTA, sem notificações externas.
+- **Símbolos:** biblioteca selecionável de ícones e símbolos, integrada ao formulário da pessoa.
+- **Mitologia pessoal:** arquétipos editáveis (Vlastnyys, Yotunt, Kantionyys, Chiteyavs, Tsuknyys) e tags de percepção personalizáveis, com pesquisa e filtros. Nenhuma avaliação automatizada de terceiros.
+- **Lista de porcentagens:** duas estimativas independentes por pessoa (minha proximidade e reciprocidade que imagino), com valores 0–100%, uma casa decimal; ranking por estimativa ou variação recente, histórico de mudanças e anotações positivas, negativas, neutras e reflexivas. Cada anotação pode referenciar uma memória/evento existente.
+- **Tutorial estendido:** 15 etapas em destaque, com campos de símbolos, cores, categorias, arquétipos e porcentagens, setas ← →, Esc, e retomada por Configurações.
 - **Narrativa:** criar atos com ordem, datas livres, símbolos e status; criar capítulos em atos; associar pessoas a diversos capítulos; navegar entre ficha e capítulo.
 - **Memórias:** registrar texto livre, data aproximada ou em branco, tags, grau de certeza, pessoas e capítulo opcional.
 - **Eventos e missões:** cadastro, edição, exclusão, vínculos, status, prioridade e notas de progresso.
@@ -49,7 +61,8 @@ acta-personal-archive/
 │   ├── BACKUP-E-PRIVACIDADE.md
 │   ├── PUBLICAR-NO-GITHUB.md
 │   ├── TESTES.md
-│   └── RELEASE-NOTES-v0.1.0-alpha.md
+│   ├── RELEASE-NOTES-v0.1.0-alpha.md
+│   └── RELEASE-NOTES-v0.2.0-alpha.md
 ├── ROADMAP.md
 └── CHANGELOG.md
 ```
@@ -92,14 +105,17 @@ Como os módulos de runtime são JavaScript nativo, você também pode servir **
 - Acesse o repositório, substitua arquivos alterados usando o navegador e faça commit.
 - Atualize `package.json`, `CHANGELOG.md`, `ROADMAP.md` e as release notes conforme a versão.
 - Se publicar uma versão nova, altere `CACHE` em `public/sw.js` para invalidar o cache antigo.
-- Crie a nova **Release** em **Releases → Draft a new release** com tag `v0.1.0-alpha` para a primeira versão.
+- Crie a **Release** em **Releases → Draft a new release** com tag `v0.2.0-alpha`, usando `docs/RELEASE-NOTES-v0.2.0-alpha.md`.
 - **Não carregue arquivos `.acta`, backups, dados pessoais ou os arquivos `dist`/`node_modules`** no repositório.
 
 ## Limitações honestas da versão alpha
 
 - Não há autenticação, banco remoto, sincronização entre dispositivos, criptografia do IndexedDB em repouso, controle de acesso por senha, anexos genéricos, editor visual de grafo ou relatórios PDF.
 - Excluir um registro não tem lixeira; faça backup antes.
-- Categorias e status são conjuntos iniciais fixos; personalização completa está no roadmap.
+- Categorias principais e situações são conjuntos iniciais fixos; cores, tags e arquétipos podem ser personalizados. Outros tipos de categorias e classificações avançadas estão no roadmap.
+- O histórico de porcentagens é cronológico e imutável; você pode remover a última anotação (com confirmação), mas não editar notas anteriores. Gráficos e comparações por período ficam para a próxima versão.
+- Porcentagens são apenas estimativas do autor; não expressam certeza sobre sentimentos de outras pessoas.
+- Os lembretes de aniversário não chegam como notificações push e o app não executa em segundo plano.
 - Não há detecção automatizada de caráter, diagnóstico ou análise de terceiros.
 - Arquivos grandes ou dezenas de milhares de registros podem ultrapassar a quota do navegador.
 - Primeira execução offline e persistência de longo prazo dependem de navegador, cache, origem e configurações.

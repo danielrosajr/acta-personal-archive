@@ -1,5 +1,5 @@
 /* ACTA offline cache. No remote API calls, no private records stored in CacheStorage. */
-const CACHE='acta-shell-v0.1.0-alpha-1';
+const CACHE='acta-shell-v0.2.0-alpha-1';
 const BASE=self.registration.scope;
 self.addEventListener('install', event => {
   event.waitUntil((async()=>{

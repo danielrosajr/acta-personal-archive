@@ -39,7 +39,7 @@ test('Removing a person clears links but preserves memories/events',()=>{
   deleteRecord(a,'chapters',ch.id);assert.equal(a.memories[0].chapterId,null);deleteRecord(a,'acts',act.id);validateArchive(a);
 });
 test('Rejects invalid and corrupted archive structures',()=>{
-  const a=emptyArchive();a.people.push({id:'p1',codename:'A',code:'P-001',codeHistory:[],aliases:[],reflections:[]});
+  const a=emptyArchive();saveRecord(a,'people',{codename:'A',code:'P-001'});
   assert.equal(validateArchive(a),true);
   a.people.push({...a.people[0],id:'p2',code:'p-001'});
   assert.throws(()=>validateArchive(a),/duplicado/);

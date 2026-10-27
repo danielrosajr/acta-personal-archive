@@ -22,12 +22,14 @@ Este guia não exige instalar Git nem fazer `git push` pelo terminal. O GitHub A
 
 ## 3. Enviar os arquivos via navegador
 
+**Se está atualizando a v0.1:** antes de substituir os arquivos, acesse o ACTA antigo no mesmo navegador e **exporte um backup criptografado**. A v0.2 converte dados locais antigos automaticamente quando acessada na mesma origem. Atualize/substitua todos os arquivos da pasta `src/`, além dos documentos, `package.json`, `public/sw.js` e os demais arquivos do ZIP; não mescle uma versão antiga de `src/main.js` com o novo modelo.
+
 1. Extraia o arquivo ZIP em seu computador.
 2. Abra o novo repositório em `https://github.com/USUARIO/acta-personal-archive`.
 3. Clique em **Add file → Upload files**.
 4. Arraste **o conteúdo de dentro da pasta extraída** para a tela de upload — `index.html`, `package.json`, `vite.config.js`, `src/`, `public/`, `docs/`, `README.md`, `CHANGELOG.md`, `ROADMAP.md` etc.
 5. Confirme que a pasta **`.github/workflows/deploy.yml`** também foi enviada. Em alguns gerenciadores, pastas iniciadas com `.` ficam ocultas; use `Ctrl+H` no Linux para mostrar arquivos ocultos. Se o upload não trouxer `.github`, vá em **Add file → Create new file**, escreva o caminho `.github/workflows/deploy.yml` e cole o conteúdo do arquivo fornecido.
-6. No campo de mensagem de commit, cole: `feat: initialize ACTA personal narrative archive and codex`.
+6. No campo de mensagem de commit, cole: `feat: expand ACTA Codex with relationship history and personal mythology`.
 7. Selecione **Commit directly to the main branch** e confirme.
 
 **Nunca envie** backups `.acta`, arquivos JSON pessoais, `node_modules`, `dist`, banco de dados local ou fotos privadas exportadas.
@@ -97,12 +99,12 @@ O app usa navegação por `#/rota` para evitar erro 404 ao recarregar páginas i
 - Dados locais não são parte do GitHub. Use um backup anterior.
 - Não limpe os dados do site sem criar backup.
 
-## 9. Criar a primeira release
+## 9. Criar a release de atualização
 
 1. Abra **Releases → Draft a new release**.
-2. Escolha **Create new tag**: `v0.1.0-alpha`, com destino na branch `main`.
-3. Título: `ACTA v0.1.0-alpha — The Personal Codex`.
-4. Cole o conteúdo de `docs/RELEASE-NOTES-v0.1.0-alpha.md`.
+2. Escolha **Create new tag**: `v0.2.0-alpha`, com destino na branch `main`.
+3. Título: `ACTA v0.2.0-alpha — Codex Evolved`.
+4. Cole o conteúdo de `docs/RELEASE-NOTES-v0.2.0-alpha.md`.
 5. Marque **Set as a pre-release**.
 6. Publique com **Publish release**.
 7. Opcionalmente, anexe o ZIP do código-fonte preparado para esta entrega. Não anexe backups pessoais.

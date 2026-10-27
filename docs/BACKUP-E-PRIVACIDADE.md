@@ -31,7 +31,7 @@ Existe uma opção de exportação em JSON legível para interoperabilidade. Ela
 1. Faça primeiro uma exportação dos registros atuais.
 2. Vá em **Configurações → Selecionar arquivo** e escolha `.acta` ou `.json`.
 3. Se o backup for criptografado, informe a senha.
-4. O ACTA valida a assinatura do formato, versão (`actaBackup: 1`, esquema `schemaVersion: 1`), listas, IDs, códigos e referências relacionais.
+4. O ACTA valida a assinatura do formato, versão (`actaBackup: 1`, esquema `schemaVersion: 1` ou `2`), listas, IDs, códigos e referências relacionais.
 5. O aplicativo informa a quantidade de pessoas, capítulos e memórias e pede **confirmação explícita** para substituir os dados atuais.
 6. Confirme apenas se desejar substituir **todo** o arquivo atual. Não é um merge.
 
@@ -46,3 +46,12 @@ A importação recusa versões incompatíveis, códigos duplicados, vínculos in
 - O ACTA não envia telemetria, eventos de uso nem registros para serviços externos. GitHub Pages, como qualquer hospedagem web, pode registrar requisições HTTP normais de entrega de arquivos estáticos; isso é independente do banco de dados privado.
 - Código-fonte público e dados privados são coisas distintas: o aplicativo não contém dados pessoais de demonstração ou usuário no ZIP.
 - A privacidade dos dados de terceiros também importa: registre apenas o necessário para sua própria memória e evite difusão indevida.
+
+
+## Migração 0.1 → 0.2
+
+A versão v0.2.0-alpha usa `schemaVersion: 2`. Ao abrir no **mesmo navegador/origem** com dados da v0.1, valida o arquivo anterior, copia a estrutura e adiciona campos opcionais, preservando IDs, códigos, vínculos e conteúdo. O backup de formato `actaBackup: 1` permanece compatível e arquivos legados válidos são migrados depois da descriptografia, antes da importação.
+
+**Faça um backup criptografado antes de publicar a versão nova.** Não há migração entre domínios: mudar para domínio próprio ou outro `usuario.github.io` cria outra origem, e os dados permanecem no armazenamento antigo até serem exportados/importados por você.
+
+O histórico de porcentagens, tags, arquétipos e aniversários integra a exportação criptografada, mas **dados IndexedDB abertos no navegador não são criptografados**.

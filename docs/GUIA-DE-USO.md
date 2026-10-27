@@ -1,4 +1,4 @@
-# ACTA — Guia de uso (v0.1.0-alpha)
+# ACTA — Guia de uso (v0.2.0-alpha)
 
 ## 1. Primeiro acesso
 
@@ -58,3 +58,26 @@ Em **Configurações**, altere o tema claro/escuro ou o prefixo sugerido dos fut
 - Categorias e situações iniciais não são editáveis globalmente no MVP.
 - A exclusão é definitiva: faça backup antes.
 - Não atribua a códigos um sentido de julgamento real sobre pessoas.
+
+
+## Novos recursos da v0.2.0-alpha
+
+### Impacto na minha história
+Na ficha, preencha **Impacto na minha história** com uma influência, aprendizado ou fase importante. Não é necessário atribuir “grau de importância” nem escrever um julgamento sobre a pessoa.
+
+### Cor principal e símbolos
+Ao editar uma pessoa, marque um ou mais vínculos (por exemplo, Família e Amizade). Escolha **Vínculo principal** e mantenha **Cor da ficha: Usar a cor do vínculo principal**. Para usar outra cor, escolha **Cor personalizada**. Altere as cores de todas as categorias em **Configurações**. A biblioteca de símbolos no formulário permite clicar para preencher o campo, mas você também pode digitar qualquer símbolo.
+
+### Aniversário
+Use `MM-DD` quando não sabe o ano ou `AAAA-MM-DD` quando sabe. Exemplo: `05-23` ou `1997-05-23`. Não é obrigatório saber a idade. O Dashboard consulta os aniversários dos próximos 30 dias por padrão; em Configurações pode usar 7, 14, 30 ou 60 dias. O site **não envia notificações com a aba fechada**. Para nascimentos em 29/02, nos anos não bissextos o aplicativo mostrará 01/03.
+
+### Arquétipos, tags e filtros
+Os cinco arquétipos históricos (Vlastnyys, Yotunt, Kantionyys, Chiteyavs e Tsuknyys) aparecem no cadastro. Você pode alterar descrições, criar novos ou retirar opções da lista em **Configurações → Arquétipos narrativos**, no formato `Nome | descrição`, uma por linha. Categorias removidas não são apagadas de fichas antigas. Use **Tags de percepção** livres, separadas por vírgula; tags sugeridas podem ser preenchidas com um clique. Na tela Codex há filtros por categoria, arquétipo e tag. Esses campos são apenas sua interpretação pessoal, não diagnósticos nem fatos objetivos.
+
+### Lista de porcentagens
+Abra uma ficha de pessoa → **Proximidade & percepções → Novo registro**. Informe **Minha proximidade** e **Reciprocidade que imagino**, cada uma de 0 a 100, com até uma casa decimal (vírgula aceita). Os valores podem ser desconhecidos/deixados em branco. Escolha uma categoria da ocorrência (Positivo, Negativo, Neutro, Reflexão), registre a data e descreva o contexto. É permitido guardar um acontecimento sem alterar números, desde que tenha uma anotação.
+
+O histórico conserva o valor anterior de cada dimensão. Registros antigos não são editados; para desfazer, só é possível remover o registro mais recente, retornando ao estado anterior. Acesse **Lista de porcentagens** na barra lateral para consultar a ordem por proximidade, reciprocidade estimada, última subida ou última queda. O ranking é uma organização privada da sua percepção, não uma classificação do valor das pessoas.
+
+### Tutorial guiado
+Em **Configurações → Iniciar tutorial guiado** você pode percorrer 15 etapas, incluindo os próprios controles de cadastro, a biblioteca de símbolos, cores, arquétipos e o histórico de porcentagens. Pressione **←** e **→** para voltar e avançar; **Esc** encerra. O tutorial não preenche nem envia dados reais automaticamente. Se não houver pessoas cadastradas, o passo de porcentagens indica onde acessar o recurso.

@@ -1,6 +1,6 @@
 import { normalizeSearch, TYPES } from './model.js';
 const content = (item, type) => {
-  if (type === 'people') return [item.code, ...(item.codeHistory || []), item.codename, item.realName, item.met, item.role, item.perception, item.description, item.notes, ...(item.aliases || []).flatMap(a => [a.name, a.description]), ...(item.reflections || []).map(r => r.body), ...(item.categories || [])];
+  if (type === 'people') return [item.code, ...(item.codeHistory || []), item.codename, item.realName, item.met, item.role, item.perception, item.description, item.notes, item.importance, item.birthDate, item.primaryCategory, ...(item.archetypes||[]), ...(item.perceptionTags||[]), ...(item.relationshipHistory||[]).map(r=>r.note), ...(item.aliases || []).flatMap(a => [a.name, a.description]), ...(item.reflections || []).map(r => r.body), ...(item.categories || [])];
   if (type === 'memories') return [item.title, item.body, item.date, item.certainty, ...(item.tags || [])];
   return [item.title, item.description, item.body, item.notes, item.objective, item.initial, item.final, item.progress];
 };

@@ -1,4 +1,4 @@
-import { validateArchive } from './model.js';
+import { validateArchive, migrateArchive } from './model.js';
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 const ROUNDS = 310000;
@@ -44,5 +44,5 @@ export async function parseBackup(json, password = '') {
     } catch { throw new Error('Senha incorreta ou arquivo danificado.'); }
   }
   validateArchive(data);
-  return structuredClone(data);
+  return migrateArchive(data);
 }
