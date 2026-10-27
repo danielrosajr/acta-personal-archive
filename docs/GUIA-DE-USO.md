@@ -1,4 +1,4 @@
-# ACTA — Guia de uso (v0.2.0-alpha)
+# ACTA — Guia de uso (v0.3.0-alpha)
 
 ## 1. Primeiro acesso
 
@@ -54,7 +54,7 @@ Em **Configurações**, altere o tema claro/escuro ou o prefixo sugerido dos fut
 
 - Não há sincronização entre telefone e computador.
 - Fotos importadas são compactadas para até 320 px em JPEG; não substituem um álbum de arquivos originais.
-- Data e período são campos livres nesta versão; não há ordenação temporal sofisticada.
+- Atos e memórias permitem períodos em texto livre; o gráfico de porcentagens exige uma data completa válida, ou deixa a avaliação fora do eixo cronológico.
 - Categorias e situações iniciais não são editáveis globalmente no MVP.
 - A exclusão é definitiva: faça backup antes.
 - Não atribua a códigos um sentido de julgamento real sobre pessoas.
@@ -80,4 +80,38 @@ Abra uma ficha de pessoa → **Proximidade & percepções → Novo registro**. I
 O histórico conserva o valor anterior de cada dimensão. Registros antigos não são editados; para desfazer, só é possível remover o registro mais recente, retornando ao estado anterior. Acesse **Lista de porcentagens** na barra lateral para consultar a ordem por proximidade, reciprocidade estimada, última subida ou última queda. O ranking é uma organização privada da sua percepção, não uma classificação do valor das pessoas.
 
 ### Tutorial guiado
-Em **Configurações → Iniciar tutorial guiado** você pode percorrer 15 etapas, incluindo os próprios controles de cadastro, a biblioteca de símbolos, cores, arquétipos e o histórico de porcentagens. Pressione **←** e **→** para voltar e avançar; **Esc** encerra. O tutorial não preenche nem envia dados reais automaticamente. Se não houver pessoas cadastradas, o passo de porcentagens indica onde acessar o recurso.
+Em **Configurações → Iniciar tutorial guiado** você pode percorrer as etapas guiadas, incluindo os próprios controles de cadastro, a biblioteca de símbolos, cores, arquétipos e o histórico de porcentagens. Pressione **←** e **→** para voltar e avançar; **Esc** encerra. O tutorial não preenche nem envia dados reais automaticamente. Se não houver pessoas cadastradas, o passo de porcentagens indica onde acessar o recurso.
+
+## Novos recursos — v0.3.0-alpha
+
+### Gráficos individuais de porcentagens
+
+Abra **Codex → Pessoa → Proximidade & percepções**. Registre pelo menos duas avaliações com datas distintas no botão **Novo registro**. As duas curvas usam informações separadas: **minha proximidade** e **reciprocidade que imagino**. Para recortar o intervalo, escolha datas em **Gráfico desde** e **Gráfico até**. Para consultar valores sem depender da visão, expanda **Ver dados exatos do gráfico**.
+
+### Gráfico geral (todas as pessoas)
+
+Entre em **Lista de porcentagens → Gráfico de todas as pessoas**. Cada pessoa com avaliações datadas gera uma linha. Escolha o indicador **Minha proximidade** ou **Reciprocidade percebida**. Filtre por período com as datas abaixo do seletor. O gráfico não inventa avaliações entre as amostras nem coloca valores ausentes em 0%.
+
+### Comparar duas datas
+
+Na mesma tela do ranking, use **Comparar períodos — todas as pessoas**. Na ficha individual, use **Comparar dois momentos**. Cada coluna mostra o último registro conhecido até a data que você informou; se ainda não havia avaliação conhecida, aparece **—**.
+
+### Conexões entre pessoas
+
+Na ficha de uma pessoa, abra **Conexões com outras pessoas → Vincular**, selecione alguém e um tipo de vínculo, com período/observação opcionais. A ligação aparecerá nas duas fichas automaticamente. Você pode editá-la ou excluí-la, sem apagar as pessoas ou memórias associadas.
+
+### Grupos e organizações narrativas
+
+Na página **ACTA Codex**, depois do índice de fichas, selecione **Grupos e organizações → Novo grupo**. Escreva o nome e, opcionalmente, descrição, período e integrantes. As fichas das pessoas passam a mostrar em quais grupos aparecem. As edições deixam a versão anterior guardada no histórico de backup.
+
+### Corrigir uma avaliação sem apagar a versão anterior
+
+Na seção de proximidade da ficha, localize a avaliação e clique no ícone **Editar** ao lado dela. Ajuste porcentagens, data ou nota e **explique obrigatoriamente o motivo**. O ACTA guarda o conteúdo anterior e você pode visualizá-lo em **Histórico de correções**.
+
+### Novos filtros
+
+No Codex, refine a listagem por **sem contato**, **aniversário neste mês**, **com histórico**, **pessoas conectadas**, **ato da narrativa** ou **conter todas estas tags** (tags separadas por vírgula). Esses filtros são aplicados localmente.
+
+### Tutorial
+
+Use o ícone de **livro** na barra superior ou **Configurações → Iniciar tutorial guiado**. Os passos novos mostram os gráficos, a comparação temporal, a lista de pessoas, os grupos e o histórico de correções. Use ←/→ e Esc.

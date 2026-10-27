@@ -1,6 +1,6 @@
 # ACTA ◈ Arquivo Narrativo da Vida
 
-**ACTA v0.2.1-alpha — Settings & Tutorial Hotfix**
+**ACTA v0.3.0-alpha — Connections & Time**
 
 A private-first narrative life archive with acts, chapters, memories, missions and a personal codex of meaningful people.
 
@@ -8,28 +8,34 @@ O ACTA é um aplicativo web **local-first** para narrar a própria vida em atos,
 
 > **Aviso de privacidade importante:** IndexedDB não é criptografado. Pessoas que utilizem o mesmo perfil de navegador ou scripts de outras páginas com a mesma origem podem acessar registros locais. Em especial, sites GitHub Pages sob `https://usuario.github.io/` compartilham a **mesma origem**, mesmo em diferentes repositórios/caminhos. Para informações realmente sensíveis, use uma origem exclusiva (por exemplo, um domínio dedicado) e avalie aguardar armazenamento criptografado de ponta a ponta. Faça backups criptografados e preserve a senha.
 
-## Atualização da versão anterior (sem perder o arquivo)
+## Atualização segura a partir das versões anteriores
 
-**Antes de atualizar:** abra a v0.1.0-alpha já publicada e exporte um **backup criptografado** em Configurações. Salve-o fora do repositório. Depois envie os arquivos da v0.2.1-alpha para **o mesmo repositório**, mantendo o mesmo endereço/origem, e execute o workflow. O ACTA detecta registros locais antigos (schema 1), migra para **schema 2** e conserva códigos, IDs, capítulos, memórias e aliases. Backups ACTA schema 1 também são aceitos na restauração. A atualização do código pelo GitHub não transfere suas memórias para um novo dispositivo, perfil ou domínio.
+1. **Antes de substituir qualquer arquivo, faça um backup criptografado** em Configurações na sua versão atual. Guarde a senha e o arquivo `.acta` fora do GitHub.
+2. Abra **o mesmo repositório** e publique os arquivos da **v0.3.0-alpha** com o GitHub Actions. Não altere o domínio/origem do aplicativo ao atualizar.
+3. O ACTA lê a estrutura local antiga (schema 1 ou 2), valida antes da conversão e migra para **schema 3**, preservando IDs, códigos históricos, memórias, capítulos e avaliações. Cria somente as coleções vazias necessárias (`connections` e `groups`) e o histórico de correções.
+4. Confirme no site publicado: pessoas antigas, porcentagens, eventos vinculados, Configurações, gráficos e exportação de backup.
+5. Não limpe os dados do site, o IndexedDB ou o perfil do navegador durante uma atualização. O backup é seu meio de recuperação se o armazenamento local falhar.
 
-**Importante:** migração é automática, mas não substitui o backup prévio. Se o navegador remover dados locais, eles não serão recuperáveis sem backup. Ao migrar, as cores antigas personalizadas são preservadas; selecione “cor por vínculo principal” na ficha para ativar os novos padrões.
+## Funcionalidades da v0.3.0-alpha
 
-## O que funciona nesta versão
+- **Gráfico individual:** cada ficha exibe duas séries: quanto você se sente próximo e quanto imagina que a outra pessoa se sente próxima. Eixo temporal com datas reais, filtros de período, pontos com descrição e tabela acessível.
+- **Gráfico geral:** na Lista de porcentagens, uma linha por pessoa; alternância entre proximidade e reciprocidade, recorte de datas, legenda e tabela de pontos. Pessoas sem registros datados são omitidas do gráfico (mas continuam no Codex).
+- **Comparação temporal:** compare duas datas na ficha individual e na lista geral. O sistema usa o último registro datado conhecido até cada data e mantém campos desconhecidos como `—`, sem transformá-los em zero nem supor sentimentos reais.
+- **Conexões:** vínculos entre duas pessoas do Codex com tipo, período e observação subjetiva; a ligação aparece em ambas as fichas e pode ser editada ou excluída.
+- **Grupos/organizações:** círculos narrativos com nome, descrição, período e integrantes. Edições guardam instantâneos anteriores no histórico interno do backup.
+- **Correções com auditoria:** corrija data, porcentagem ou nota de uma avaliação antiga com motivo obrigatório; o valor anterior fica acessível na ficha e o encadeamento posterior permanece coerente.
+- **Referências a acontecimentos:** continue associando avaliações a uma memória ou evento, com título e acesso às informações na ficha.
+- **Filtros:** por vínculo principal, arquétipo, tags, situação sem contato, aniversários do mês, existência de histórico/conexão, ato de participação e múltiplas tags simultâneas.
+- **Tutorial guiado expandido:** destaque contextual nas telas de gráficos gerais, comparação temporal, vínculos, grupos, correções e nos recursos anteriores; setas esquerda/direita e botão para reiniciar.
+- **Recursos anteriores preservados:** atos/capítulos, Codex, pesquisa, aniversários, símbolos, arquétipos narrativos, memórias, missões, exportação criptografada, temas e IndexedDB.
 
-- **ACTA Codex:** criar, editar e excluir fichas; códigos exclusivos; sugestão sequencial por prefixo; códigos históricos após renomeação; codinome principal e histórico de apelidos; status, múltiplas categorias, símbolo e cor; foto local compactada; descrições, período incerto, observações e reflexões datadas.
-- **Cores por vínculo:** padrões editáveis para Família, Amizade, Relacionamento etc.; múltiplas categorias e escolha de uma categoria principal; cor manual opcional.
-- **Datas de nascimento:** ano opcional (`MM-DD` ou `AAAA-MM-DD`) e avisos no Dashboard dentro do horizonte de 7/14/30/60 dias. Os avisos só aparecem ao abrir o ACTA, sem notificações externas.
-- **Símbolos:** biblioteca selecionável de ícones e símbolos, integrada ao formulário da pessoa.
-- **Mitologia pessoal:** arquétipos editáveis (Vlastnyys, Yotunt, Kantionyys, Chiteyavs, Tsuknyys) e tags de percepção personalizáveis, com pesquisa e filtros. Nenhuma avaliação automatizada de terceiros.
-- **Lista de porcentagens:** duas estimativas independentes por pessoa (minha proximidade e reciprocidade que imagino), com valores 0–100%, uma casa decimal; ranking por estimativa ou variação recente, histórico de mudanças e anotações positivas, negativas, neutras e reflexivas. Cada anotação pode referenciar uma memória/evento existente.
-- **Tutorial estendido:** 15 etapas em destaque, com campos de símbolos, cores, categorias, arquétipos e porcentagens, setas ← →, Esc, e retomada por Configurações ou pelo botão do livro no cabeçalho.
-- **Narrativa:** criar atos com ordem, datas livres, símbolos e status; criar capítulos em atos; associar pessoas a diversos capítulos; navegar entre ficha e capítulo.
-- **Memórias:** registrar texto livre, data aproximada ou em branco, tags, grau de certeza, pessoas e capítulo opcional.
-- **Eventos e missões:** cadastro, edição, exclusão, vínculos, status, prioridade e notas de progresso.
-- **Pesquisa:** em pessoas, atos, capítulos, memórias, eventos e missões por códigos atuais ou anteriores, nomes, codinomes e conteúdo textual. Atalho `Ctrl+K`/`⌘K`.
-- **Privacidade e backup:** IndexedDB, exportação JSON em claro ou backup criptografado com senha (AES-256-GCM + PBKDF2-SHA256), importação validada com confirmação de substituição.
-- **Interface:** dark/light persistente, responsiva, dados fictícios opcionais, tutorial com foco no elemento e setas de navegação, inicialização automática no primeiro acesso a um arquivo vazio e acesso rápido pelo botão de livro no cabeçalho.
-- **Offline:** service worker pré-armazena recursos básicos após a primeira visita online bem-sucedida; dados ficam no IndexedDB. Offline não é garantido se o navegador limpar o cache, se as permissões de armazenamento falharem ou se os arquivos não forem armazenados corretamente.
+### Entendendo os gráficos
+
+Os pontos representam avaliações efetivamente registradas com data completa válida (`AAAA-MM-DD`). Os segmentos ligam esses pontos visualmente, mas o ACTA **não gera estimativas para datas intermediárias**. Avaliações sem data continuam no histórico, mas não são colocadas arbitrariamente no eixo temporal. Dados desconhecidos permanecem ausentes. Os percentuais são percepções privadas, não medidas científicas ou juízos objetivos sobre terceiros.
+
+### Privacidade
+
+Não há conta, banco remoto, analytics ou requisições de API para processar memórias. O IndexedDB **não é criptografado em repouso**. Backups criptografados usam Web Crypto (AES-256-GCM com derivação de senha PBKDF2-SHA256). GitHub Pages no mesmo domínio de usuário compartilha a origem entre projetos — use domínio isolado para arquivos sensíveis.
 
 ## Tecnologias
 
@@ -106,7 +112,7 @@ Como os módulos de runtime são JavaScript nativo, você também pode servir **
 - Acesse o repositório, substitua arquivos alterados usando o navegador e faça commit.
 - Atualize `package.json`, `CHANGELOG.md`, `ROADMAP.md` e as release notes conforme a versão.
 - Se publicar uma versão nova, altere `CACHE` em `public/sw.js` para invalidar o cache antigo.
-- Crie a **Release** em **Releases → Draft a new release** com tag `v0.2.0-alpha`, usando `docs/RELEASE-NOTES-v0.2.0-alpha.md`.
+- Crie a **Release** em **Releases → Draft a new release** com tag `v0.3.0-alpha`, usando `docs/RELEASE-NOTES-v0.3.0-alpha.md`.
 - **Não carregue arquivos `.acta`, backups, dados pessoais ou os arquivos `dist`/`node_modules`** no repositório.
 
 ## Limitações honestas da versão alpha
@@ -114,7 +120,7 @@ Como os módulos de runtime são JavaScript nativo, você também pode servir **
 - Não há autenticação, banco remoto, sincronização entre dispositivos, criptografia do IndexedDB em repouso, controle de acesso por senha, anexos genéricos, editor visual de grafo ou relatórios PDF.
 - Excluir um registro não tem lixeira; faça backup antes.
 - Categorias principais e situações são conjuntos iniciais fixos; cores, tags e arquétipos podem ser personalizados. Outros tipos de categorias e classificações avançadas estão no roadmap.
-- O histórico de porcentagens é cronológico e imutável; você pode remover a última anotação (com confirmação), mas não editar notas anteriores. Gráficos e comparações por período ficam para a próxima versão.
+- As avaliações são registradas em sequência de criação e visualizadas cronologicamente quando contêm data completa. É possível corrigir registros antigos com motivo e auditoria; a exclusão de entradas usa confirmação e restrições de integridade.
 - Porcentagens são apenas estimativas do autor; não expressam certeza sobre sentimentos de outras pessoas.
 - Os lembretes de aniversário não chegam como notificações push e o app não executa em segundo plano.
 - Não há detecção automatizada de caráter, diagnóstico ou análise de terceiros.
@@ -127,6 +133,6 @@ Consulte [`ROADMAP.md`](ROADMAP.md), [`CHANGELOG.md`](CHANGELOG.md) e [`docs/TES
 
 Copyright © 2026 ACTA. **Nenhuma licença de reutilização foi concedida neste pacote.** Escolha e adicione um arquivo `LICENSE` antes de permitir redistribuição, alteração ou contribuições por terceiros. A visibilidade pública do repositório não equivale a conceder uma licença de código aberto.
 
-## Correção rápida para quem já publicou v0.2.0-alpha
+## Atualização a partir da v0.2.1-alpha
 
-Consulte `docs/HOTFIX-v0.2.1.md`. O ZIP de hotfix substitui apenas `src/main.js`, `public/sw.js`, `package.json` e os arquivos de documentação/testes atualizados. Mantenha a mesma URL de publicação; **não apague dados do navegador nem seus backups**.
+Consulte [`docs/ATUALIZAR-v0.3.0.md`](docs/ATUALIZAR-v0.3.0.md). Substitua os arquivos na mesma URL, sem apagar dados do navegador e **sempre exportando um backup criptografado antes**.

@@ -1,7 +1,7 @@
 {
   "name": "acta-personal-archive",
   "private": true,
-  "version": "0.2.1-alpha",
+  "version": "0.3.0-alpha",
   "type": "module",
   "description": "A private-first narrative life archive with acts, chapters, memories, missions and a personal codex.",
   "scripts": {
@@ -11,6 +11,10 @@
     "test": "node --test src/tests/*.test.js",
     "check": "npm run test && node --check src/main.js && node --check src/lib/model.js && node --check src/lib/backup.js && node --check src/lib/storage.js"
   },
-  "devDependencies": {"vite": "^6.3.5"},
-  "engines": {"node": ">=20"}
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

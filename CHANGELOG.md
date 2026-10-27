@@ -2,6 +2,27 @@
 
 Todos os marcos futuros são planejados e podem mudar após testes.
 
+## [0.3.0-alpha] — 2026-10-27 — Connections & Time
+
+### Adicionado
+- Gráficos SVG de histórico de proximidade/reciprocidade para cada pessoa, e gráfico combinado de todas as pessoas na Lista de Porcentagens, com alternância de métrica, zoom por período, legenda e tabelas acessíveis.
+- Comparador de duas datas, por pessoa e para todos, baseado no último registro conhecido até cada data.
+- Vínculos bidirecionais entre pessoas com tipo, período e anotação.
+- Grupos narrativos e organizações com participantes e rastreio de alterações.
+- Correções auditadas de avaliações antigas com justificativa e preservação dos valores originais.
+- Filtros locais: tags simultâneas, ato, aniversários do mês, sem contato, histórico e presença de conexão.
+- Tutorial contextual expandido para gráficos, comparadores, grupos e trilha de auditoria.
+- Migração automática do esquema 1/2 para o 3, com testes de importação, vínculos e backup criptografado.
+
+### Mantido / cuidados
+- Nenhuma transmissão dos dados privados para APIs; IndexedDB continua local, porém **sem criptografia em repouso**.
+- Registros sem data completa aparecem no histórico, mas não no gráfico; os gráficos não criam amostras intermediárias.
+- Backup antes de atualizar é recomendado. A publicação/IndexedDB devem ser verificados no domínio real do GitHub Pages.
+
+### Verificação
+- 28 testes Node e validação de sintaxe passaram; telas exercitadas no Chromium em montagem isolada, incluindo formulário, comparações, filtros, conexão, grupo, edição auditada e viewport de 390 px, sem exceções JS.
+- Build Vite e persistência HTTPS/IndexedDB em navegador publicado não puderam ser testados neste ambiente (npm offline sem pacote Vite em cache; Chromium bloqueia navegação HTTP local).
+
 ## [0.2.1-alpha] — 2026-10-26 — Settings & Tutorial Hotfix
 
 ### Corrigido

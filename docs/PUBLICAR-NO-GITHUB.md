@@ -120,6 +120,6 @@ Substitua os arquivos modificados usando **Upload files**, faça um commit `feat
 - Vite estático em GitHub Pages: https://vite.dev/guide/static-deploy.html
 
 
-## Atualização específica: v0.2.0-alpha → v0.2.1-alpha
+## Atualização específica: v0.2.0-alpha → v0.3.0-alpha
 
 Para corrigir a página de Configurações e o tutorial, siga `HOTFIX-v0.2.1.md`. Não é necessário recriar o repositório, migrar o banco ou apagar os dados do navegador.

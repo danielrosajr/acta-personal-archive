@@ -1,51 +1,47 @@
 # Roadmap — ACTA
 
-> As versões seguintes são sugestões, sujeitas a mudanças. Funcionalidades entregues aparecem no `CHANGELOG.md`.
+O roadmap é iterativo e cada implementação depende de validação real no GitHub Pages. Recursos anteriores são preservados; as versões descrevem marcos funcionais e não uma competição de produtividade.
 
 ## ✅ v0.1.0-alpha — The Personal Codex
-Fundação local-first: fichas, códigos históricos, atos, capítulos, memórias, eventos, missões, busca global, IndexedDB, backups, temas e tutorial.
+Atos, capítulos, pessoas, códigos, codinomes, eventos, missões, memórias, busca, backups e tutorial local-first.
 
 ## ✅ v0.2.0-alpha — Codex Evolved
-- Aniversários opcionais e avisos na abertura do aplicativo.
-- Cores padrão por vínculo com vínculo principal e sobreposição manual.
-- Biblioteca de símbolos e ajuda para Impacto na minha história.
-- Arquétipos pessoais editáveis e tags filtráveis.
-- Lista de porcentagens: dois indicadores pessoais, ranking, histórico de alterações e registros de acontecimentos.
-- Tutorial de 15 passos, migração do schema 1 para 2, e testes adicionais.
+Cores por vínculo, aniversário, símbolos, arquétipos próprios, tags e Lista de Porcentagens com histórico. **v0.2.1-alpha** corrigiu imports das Configurações e o tutorial automático.
 
-## ⭐ v0.3.0 — Connections & Time (sugestão da próxima versão)
-- **Cronologia relacional:** evolução visual de porcentagens com gráfico por pessoa e comparação de duas épocas (2018 × 2026, por exemplo).
-- **Vínculos entre pessoas:** parentesco, amizade, grupos e organizações em uma rede com histórico, sem avaliações automáticas.
-- **Eventos e capítulos como causas opcionais:** ligar mudanças de proximidade a episódios concretos registrados no ACTA e filtrar histórico por período.
-- **Filtros inteligentes locais:** aniversários do mês, pessoas sem contato, etiquetas combinadas, períodos narrativos.
-- **Editor de histórico seguro:** correções com trilha de auditoria, sem apagar o registro original.
-- **Checklist de importação/migração** para mais segurança após atualização.
+## ✅ v0.3.0-alpha — Connections & Time
+- Gráfico por pessoa: duas séries de porcentagens, datas efetivamente registradas, acesso aos dados e filtro de período.
+- Gráfico combinado: uma linha por pessoa e escolha do indicador mostrado.
+- Comparação de duas datas para uma pessoa e para o arquivo inteiro, sem inventar amostras.
+- Ligações bidirecionais entre pessoas, com tipo/período/observação.
+- Grupos e organizações da narrativa, integrantes e histórico de alterações.
+- Edição auditável de porcentagens antigas, com motivo e preservação de versões anteriores.
+- Filtros adicionais de vínculos, tags simultâneas, aniversários, situação, histórico e atos.
+- Migração dos backups schema 1/2 para schema 3 e ampliação do tutorial.
 
-## v0.4.0 — Memory Archive
-- Caixa de entrada de memórias rápidas, revisão/classificação posterior.
-- Datas aproximadas e intervalos estruturados.
-- Busca temporal avançada e anexos locais com aviso de cota.
+## ⭐ v0.4.0 — Memory Archive (próxima versão sugerida)
+**Objetivo: registrar memórias rapidamente, sem precisar saber onde classificá-las.**
+- Caixa de entrada de memórias com botão de captura instantânea e rascunhos.
+- Datas incertas estruturadas: antes de, depois de, entre anos e data aproximada, com distinção visual de datas confirmadas.
+- Associação posterior em lote a pessoas, capítulos, eventos e grupos.
+- Filtros avançados por certeza, período, tags e pessoa.
+- Anexos de imagens/arquivos guardados localmente, com limites e aviso de cota do navegador.
+- Melhorias de exportação, importação e recuperação de registros, incluindo prevenção de duplicatas e prévia antes de substituir.
 
 ## v0.5.0 — Retrospective
-- Retrospectivas de ato, capítulo, pessoa e relação; resumos cronológicos rastreáveis às memórias.
-- Exportações textuais/PDF com indicação de certeza e fonte.
-- Comparação temporal de percepção por pessoa e por relacionamento.
+Retrospectiva por ato, capítulo, pessoa e relacionamento, resumo cronológico rastreável às memórias originais, exportação textual e PDF com indicações de incerteza.
 
 ## v0.6.0 — Visual Atlas
-- Grafo opcional de pessoas, organizações e capítulos.
-- Mapa de eventos, linha do tempo visual e capas narrativas.
+Mapa visual de vínculos entre pessoas/grupos/capítulos, linha do tempo gráfica e capas narrativas.
 
 ## v0.7.0 — Narrative Studio
-- Slideshow, áudio, temas musicais e apresentações exportáveis.
-- IA opcional somente mediante autorização explícita antes de enviar qualquer conteúdo pessoal.
+Slideshows, apresentações e mídias opcionais; qualquer envio de conteúdo pessoal a IA exigirá confirmação explícita.
 
 ## v0.8.0+ — Personal Archive
-- Criptografia em repouso com desbloqueio de arquivo local e proteção mais forte de origem.
-- Sincronização opcional de ponta a ponta, histórico de versões e recuperação.
-- Considerar notificações de aniversário somente após modelar permissões, privacidade e execução confiável.
+Considerar dados locais criptografados com desbloqueio, sincronização opcional ponta a ponta, lixeira/recuperação e notificações seguras.
 
-## Critérios para todas as versões
-1. Preservar os IDs e os dados dos backups anteriores; testar migrações.
-2. Não usar pontuações ou arquétipos como julgamentos automáticos de outras pessoas.
-3. Não enviar conteúdo privado a servidores, analytics ou IA sem autorização específica.
-4. Testar formulários, importação/exportação, acessibilidade e experiência mobile.
+## Regras permanentes
+1. Privacidade antes de qualquer funcionalidade ou integração.
+2. Sem diagnóstico, julgamento automatizado, pontuação de caráter nem ranking de valor humano.
+3. Links por IDs permanentes e migração testada antes de atualizar o formato.
+4. Acontecimentos/lembranças são registros subjetivos e podem ter datas incertas.
+5. A comparação temporal não inventa dados ausentes.

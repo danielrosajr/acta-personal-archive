@@ -1,5 +1,5 @@
-/** ACTA archive schema 2. Pure functions are shared by UI, import validation, and tests. */
-export const SCHEMA = 2;
+/** ACTA archive schema 3. Pure functions are shared by UI, import validation, and tests. */
+export const SCHEMA = 3;
 export const TYPES = ['people', 'acts', 'chapters', 'memories', 'events', 'missions'];
 export const CATEGORIES = ['Família', 'Amizade', 'Relacionamento', 'Trabalho', 'Conhecido', 'Mentor', 'Inspiração', 'Pessoa histórica', 'Outro'];
 export const RELATIONSHIPS = ['Presente na minha vida', 'Contato ocasional', 'Distante', 'Sem contato', 'Relação encerrada', 'Situação desconhecida'];
@@ -16,6 +16,7 @@ export const ARCHETYPES = [
   {name:'Tsuknyys', description:'Fortes'}
 ];
 export const CHANGE_KINDS = ['Positivo','Negativo','Neutro','Reflexão'];
+export const CONNECTION_KINDS = ['Amizade','Família','Relacionamento','Trabalho','Conhecidos','Mentoria','Conflito','Outros'];
 
 export const now = () => new Date().toISOString();
 export const uid = () => crypto.randomUUID();
@@ -25,7 +26,7 @@ const arrStr = (input, max = 150) => Array.isArray(input) ? unique(input.filter(
 export const normalizeSearch = (input) => String(input ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 export const codeKey = (input) => str(input, 40).toUpperCase();
 export const isValidCode = (input) => /^[\p{L}\p{N}][\p{L}\p{N}._-]{0,39}$/u.test(str(input));
-export const emptyArchive = () => ({ schemaVersion: SCHEMA, createdAt: now(), updatedAt: now(), settings: { theme: 'dark', codePrefix: 'SCP', tutorialSeen: false, categoryColors: {...CATEGORY_COLORS}, birthdayDays: 30, archetypes: structuredClone(ARCHETYPES), perceptionTags: ['Pessoa de luz','Relação desgastante','Inspiração','Confiança','Conflito','Proteção','Distanciamento'] }, people: [], acts: [], chapters: [], memories: [], events: [], missions: [] });
+export const emptyArchive = () => ({ schemaVersion: SCHEMA, createdAt: now(), updatedAt: now(), settings: { theme: 'dark', codePrefix: 'SCP', tutorialSeen: false, categoryColors: {...CATEGORY_COLORS}, birthdayDays: 30, archetypes: structuredClone(ARCHETYPES), perceptionTags: ['Pessoa de luz','Relação desgastante','Inspiração','Confiança','Conflito','Proteção','Distanciamento'] }, people: [], acts: [], chapters: [], memories: [], events: [], missions: [], connections: [], groups: [] });
 
 export function availableCode(archive, code, ignorePersonId = null) {
   const key = codeKey(code);
@@ -86,18 +87,20 @@ export const personColor = (archive,p) => p.colorMode==='category' && p.primaryC
 /** Upgrades legacy data without discarding archival records or ID links. */
 export function migrateArchive(input) {
   if (!input || typeof input !== 'object') throw new Error('Arquivo inexistente.');
-  if (input.schemaVersion === SCHEMA) return structuredClone(input);
-  if (input.schemaVersion !== 1) throw new Error('Versão do arquivo incompatível.');
-  // Validate legacy structure before trying to migrate it.
   validateArchive(input);
-  const data=structuredClone(input);
-  data.schemaVersion=SCHEMA;
-  data.settings={...data.settings,categoryColors:{...CATEGORY_COLORS},birthdayDays:30,archetypes:structuredClone(ARCHETYPES),perceptionTags:['Pessoa de luz','Relação desgastante','Inspiração','Confiança','Conflito','Proteção','Distanciamento']};
-  data.people.forEach(p=>Object.assign(p, {birthDate:'',primaryCategory:p.categories?.[0]||'',colorMode:'custom',archetypes:[],perceptionTags:[],closenessSelf:null,closenessOther:null,relationshipHistory:[]}));
+  if (input.schemaVersion === SCHEMA) return structuredClone(input);
+  const data = structuredClone(input);
+  if (data.schemaVersion === 1) {
+    data.settings={...data.settings,categoryColors:{...CATEGORY_COLORS},birthdayDays:30,archetypes:structuredClone(ARCHETYPES),perceptionTags:['Pessoa de luz','Relação desgastante','Inspiração','Confiança','Conflito','Proteção','Distanciamento']};
+    data.people.forEach(p=>Object.assign(p, {birthDate:'',primaryCategory:p.categories?.[0]||'',colorMode:'custom',archetypes:[],perceptionTags:[],closenessSelf:null,closenessOther:null,relationshipHistory:[]}));
+  }
+  data.schemaVersion = SCHEMA;
+  data.connections = [];
+  data.groups = [];
+  data.people.forEach(p=>(p.relationshipHistory||[]).forEach(h=>{if(!Array.isArray(h.revisions))h.revisions=[];}));
   validateArchive(data);
   return data;
 }
-
 
 export function saveRecord(archive, type, input, currentId = null) {
   if (!TYPES.includes(type)) throw new Error('Tipo de registro desconhecido.');
@@ -174,17 +177,107 @@ export function addRelationshipEntry(archive, personId, input) {
   const self=decimalPercent(input.self);
   const other=decimalPercent(input.other);
   const note=str(input.note,5000), kind=select(input.kind,CHANGE_KINDS,'Neutro');
+  const recordDate=str(input.date,10);
+  if(recordDate && !validISODate(recordDate))throw new Error('Data inválida: utilize uma data completa ou deixe em branco.');
   const previousSelf=p.closenessSelf ?? null, previousOther=p.closenessOther ?? null;
   if (self===previousSelf && other===previousOther && !note) throw new Error('Informe uma alteração de percentual ou um acontecimento.');
   const linkedMemoryId=input.memoryId?nullableId(archive,input.memoryId,'memories'):null;
   const linkedEventId=input.eventId?nullableId(archive,input.eventId,'events'):null;
-  const record={id:uid(),createdAt:now(),date:str(input.date,10)||now().slice(0,10),
-    fromSelf:previousSelf,fromOther:previousOther,self,other,kind,note,memoryId:linkedMemoryId,eventId:linkedEventId};
+  const record={id:uid(),createdAt:now(),date:recordDate,
+    fromSelf:previousSelf,fromOther:previousOther,self,other,kind,note,memoryId:linkedMemoryId,eventId:linkedEventId,revisions:[]};
   p.relationshipHistory=[...(p.relationshipHistory||[]),record];
   p.closenessSelf=self;p.closenessOther=other;
   p.updatedAt=archive.updatedAt=now();
   return record;
 }
+// Undirected person-to-person ties. Never duplicate the same pair and kind.
+export function saveConnection(archive, input, connectionId=null) {
+  const left=String(input.personA||''),right=String(input.personB||'');
+  if(!left||!right||left===right)throw new Error('Escolha duas pessoas diferentes.');
+  if(!archive.people.some(p=>p.id===left)||!archive.people.some(p=>p.id===right))throw new Error('Pessoa relacionada não encontrada.');
+  const kind=select(input.kind,CONNECTION_KINDS,'Outros');
+  const old=connectionId?archive.connections.find(c=>c.id===connectionId):null;
+  if(connectionId&&!old)throw new Error('Vínculo não encontrado.');
+  if(archive.connections.some(c=>c.id!==connectionId&&c.kind===kind&&[c.personA,c.personB].includes(left)&&[c.personA,c.personB].includes(right)))throw new Error('Este tipo de vínculo já foi cadastrado para o par.');
+  const record={...base(old),personA:left,personB:right,kind,note:str(input.note,3000),period:str(input.period,150)};
+  if(old)archive.connections[archive.connections.indexOf(old)]=record;
+  else archive.connections.push(record);
+  archive.updatedAt=now();return record;
+}
+// Narrative circles/organizations, with a small append-only edit history.
+export function saveGroup(archive,input,groupId=null) {
+  const name=str(input.name,140);
+  if(!name)throw new Error('Informe o nome do grupo ou organização.');
+  const old=groupId?archive.groups.find(g=>g.id===groupId):null;
+  if(groupId&&!old)throw new Error('Grupo não encontrado.');
+  if(archive.groups.some(g=>g.id!==groupId&&normalizeSearch(g.name)===normalizeSearch(name)))throw new Error('Já existe um grupo com esse nome.');
+  const memberIds=referenceIds(archive,input.memberIds,'people');
+  const description=str(input.description,3500),period=str(input.period,160);
+  const revisions=[...(old?.revisions||[])];
+  if(old&&(old.name!==name||old.description!==description||old.period!==period||JSON.stringify(old.memberIds)!==JSON.stringify(memberIds))) {
+    revisions.push({id:uid(),revisedAt:now(),previous:{name:old.name,description:old.description,period:old.period,memberIds:[...old.memberIds]}});
+  }
+  const record={...base(old),name,description,period,memberIds,revisions};
+  if(old)archive.groups[archive.groups.indexOf(old)]=record;else archive.groups.push(record);
+  archive.updatedAt=now();return record;
+}
+export function removeGroup(archive,id){
+  if(!archive.groups.some(g=>g.id===id))throw new Error('Grupo não encontrado.');
+  archive.groups=archive.groups.filter(g=>g.id!==id);
+  archive.updatedAt=now();
+}
+
+export function removeConnection(archive,id){
+  const old=archive.connections.find(c=>c.id===id);
+  if(!old)throw new Error('Vínculo não encontrado.');
+  archive.connections=archive.connections.filter(c=>c.id!==id);
+  archive.updatedAt=now();
+}
+// Retain every old value and reason before editing the selected point.
+export function correctRelationshipEntry(archive, personId, entryId, input) {
+  const p=archive.people.find(x=>x.id===personId);
+  if(!p)throw new Error('Pessoa não encontrada.');
+  const idx=(p.relationshipHistory||[]).findIndex(h=>h.id===entryId);
+  if(idx<0)throw new Error('Avaliação não encontrada.');
+  const reason=str(input.reason,1500);
+  if(!reason)throw new Error('Explique o motivo da correção para preservar o histórico.');
+  const h=p.relationshipHistory[idx];
+  const newDate=str(input.date,10);
+  if(newDate && !validISODate(newDate))throw new Error('Informe uma data completa válida ou deixe em branco.');
+  const self=decimalPercent(input.self),other=decimalPercent(input.other),note=str(input.note,5000);
+  if(h.date===newDate && h.self===self && h.other===other && h.note===note)throw new Error('Não há alterações neste registro.');
+  h.revisions=[...(h.revisions||[]),{id:uid(),revisedAt:now(),reason,previous:{date:h.date,self:h.self,other:h.other,note:h.note}}];
+  Object.assign(h,{date:newDate,self,other,note});
+  for(let i=idx+1;i<p.relationshipHistory.length;i++){
+    p.relationshipHistory[i].fromSelf=p.relationshipHistory[i-1].self;
+    p.relationshipHistory[i].fromOther=p.relationshipHistory[i-1].other;
+  }
+  const last=p.relationshipHistory.at(-1);
+  p.closenessSelf=last.self;p.closenessOther=last.other;
+  p.updatedAt=archive.updatedAt=now();return h;
+}
+export const validISODate = date => {
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(String(date))) return false;
+  const [y,m,d]=date.split('-').map(Number);
+  const built=new Date(Date.UTC(y,m-1,d));
+  return y>=1000&&built.getUTCFullYear()===y&&built.getUTCMonth()===m-1&&built.getUTCDate()===d;
+};
+// Return one point per recorded date; never interpolate missing estimates.
+export function chartPoints(person) {
+  return (person.relationshipHistory||[]).filter(h=>validISODate(h.date)).map((h,index)=>({
+    id:h.id,date:h.date,self:h.self,other:h.other,note:h.note,kind:h.kind,index,
+  })).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
+}
+export function snapshotAt(person,date) {
+  if(!validISODate(date))throw new Error('Selecione uma data válida para comparar.');
+  return chartPoints(person).filter(h=>h.date<=date).at(-1)||null;
+}
+export function compareSnapshots(person,dateA,dateB) {
+  const first=snapshotAt(person,dateA),second=snapshotAt(person,dateB);
+  return {first,second,selfDelta:first?.self!=null&&second?.self!=null ? Math.round((second.self-first.self)*10)/10 : null,
+    otherDelta:first?.other!=null&&second?.other!=null ? Math.round((second.other-first.other)*10)/10 : null};
+}
+
 export function removeRelationshipEntry(archive,personId,entryId) {
   const p=archive.people.find(p=>p.id===personId);
   if(!p)throw new Error('Pessoa não encontrada.');
@@ -247,7 +340,11 @@ export function deleteRecord(archive, type, id) {
   if (!archive[type].some(x => x.id === id)) throw new Error('Registro não encontrado.');
   if (type === 'acts' && archive.chapters.some(x => x.actId === id)) throw new Error('Este ato contém capítulos. Exclua ou mova os capítulos primeiro.');
   archive[type] = archive[type].filter(x => x.id !== id);
-  if (type === 'people') for (const t of ['chapters','memories','events','missions']) archive[t].forEach(rec => rec.personIds = rec.personIds.filter(x => x !== id));
+  if (type === 'people') {
+    for (const t of ['chapters','memories','events','missions']) archive[t].forEach(rec => rec.personIds = rec.personIds.filter(x => x !== id));
+    archive.connections=archive.connections.filter(c=>c.personA!==id&&c.personB!==id);
+    archive.groups.forEach(g=>g.memberIds=g.memberIds.filter(pid=>pid!==id));
+  }
   if (type === 'chapters') {
     for (const t of ['memories', 'events','missions']) archive[t].forEach(rec => { if (rec.chapterId === id) rec.chapterId = null; });
     archive.people.forEach(p => p.aliases.forEach(a => { if (a.chapterId === id) a.chapterId = null; }));
@@ -258,7 +355,7 @@ export function deleteRecord(archive, type, id) {
 
 /** Reject corrupted, unsupported and inconsistent backups before replacement. */
 export function validateArchive(data) {
-  if (!data || typeof data !== 'object' || Array.isArray(data) || ![1,SCHEMA].includes(data.schemaVersion)) throw new Error('Formato ou versão de arquivo incompatível (esperado schemaVersion: 1 ou 2).');
+  if (!data || typeof data !== 'object' || Array.isArray(data) || ![1,2,SCHEMA].includes(data.schemaVersion)) throw new Error('Formato ou versão de arquivo incompatível (esperado schemaVersion: 1, 2 ou 3).');
   if (!data.settings || typeof data.settings !== 'object') throw new Error('Configurações ausentes.');
   for (const type of TYPES) {
     if (!Array.isArray(data[type]) || data[type].length > 25000) throw new Error(`Coleção inválida: ${type}.`);
@@ -270,10 +367,31 @@ export function validateArchive(data) {
       if (type !== 'people' && (typeof entry.title !== 'string' || !entry.title.trim())) throw new Error(`Título inválido em ${type}.`);
     }
   }
-  if(data.schemaVersion===2){
+  if(data.schemaVersion>=2){
     if(!data.settings.categoryColors || typeof data.settings.categoryColors!=='object' || !Array.isArray(data.settings.archetypes) || !Array.isArray(data.settings.perceptionTags)) throw new Error('Configurações do Codex v2 inválidas.');
     for(const color of Object.values(data.settings.categoryColors)) if(typeof color!=='string'||!/^#[0-9a-fA-F]{6}$/.test(color)) throw new Error('Cor de categoria inválida no backup.');
     for(const archetype of data.settings.archetypes) if(!archetype||typeof archetype.name!=='string'||!archetype.name.trim()||typeof archetype.description!=='string') throw new Error('Arquétipo inválido.');
+  }
+  if(data.schemaVersion===3){
+    if(!Array.isArray(data.groups)||data.groups.length>25000)throw new Error('Coleção de grupos inválida.');
+    const groupIds=new Set(),groupNames=new Set();
+    for(const g of data.groups){
+      if(!g||typeof g.id!=='string'||groupIds.has(g.id)||typeof g.name!=='string'||!g.name.trim()||
+        groupNames.has(normalizeSearch(g.name))||typeof g.description!=='string'||typeof g.period!=='string'||
+        !Array.isArray(g.memberIds)||g.memberIds.some(id=>!data.people.some(p=>p.id===id))||
+        new Set(g.memberIds).size!==g.memberIds.length||!Array.isArray(g.revisions))throw new Error('Grupo narrativo inválido.');
+      groupIds.add(g.id);groupNames.add(normalizeSearch(g.name));
+    }
+    if(!Array.isArray(data.connections)||data.connections.length>25000)throw new Error('Coleção de vínculos inválida.');
+    const connIds=new Set(), pairs=new Set();
+    for(const c of data.connections){
+      if(!c||typeof c.id!=='string'||connIds.has(c.id)||c.personA===c.personB||
+        !data.people.some(p=>p.id===c.personA)||!data.people.some(p=>p.id===c.personB)||
+        !CONNECTION_KINDS.includes(c.kind)||typeof c.note!=='string'||typeof c.period!=='string')throw new Error('Vínculo de pessoas inválido.');
+      connIds.add(c.id);
+      const pair=[c.personA,c.personB].sort().join('~')+'~'+c.kind;
+      if(pairs.has(pair))throw new Error('Vínculo de pessoas duplicado.');pairs.add(pair);
+    }
   }
   const ids = (t) => new Set(data[t].map(r => r.id));
   const p = ids('people'), a = ids('acts'), ch = ids('chapters');
@@ -284,7 +402,7 @@ export function validateArchive(data) {
       codes.add(codeKey(code));
     }
     if (person.avatar && (typeof person.avatar !== 'string' || person.avatar.length > 1300000 || !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(person.avatar))) throw new Error('Avatar inválido: imagens remotas não são permitidas.');
-    if(data.schemaVersion===2) {
+    if(data.schemaVersion>=2) {
       normalizeBirthday(person.birthDate||'');
       if(!Array.isArray(person.categories)||!Array.isArray(person.archetypes)||!Array.isArray(person.perceptionTags)||!Array.isArray(person.relationshipHistory))throw new Error('Classificações da pessoa inválidas.');
       if(person.primaryCategory && !person.categories.includes(person.primaryCategory))throw new Error('Vínculo principal inválido.');
@@ -297,6 +415,7 @@ export function validateArchive(data) {
         historyIds.add(h.id);
         for(const v of [h.fromSelf,h.fromOther,h.self,h.other])decimalPercent(v);
         if(h.fromSelf!==previousSelf || h.fromOther!==previousOther)throw new Error('Histórico de porcentagens inconsistente.');
+        if(data.schemaVersion===3 && (!Array.isArray(h.revisions)||h.revisions.some(r=>!r||!r.id||!r.revisedAt||!r.reason||!r.previous||typeof r.previous.note!=='string')))throw new Error('Histórico de correções inválido.');
         if(h.memoryId && !data.memories.some(m=>m.id===h.memoryId))throw new Error('Histórico vinculado a memória inexistente.');
         if(h.eventId && !data.events.some(e=>e.id===h.eventId))throw new Error('Histórico vinculado a evento inexistente.');
         previousSelf=h.self;previousOther=h.other;

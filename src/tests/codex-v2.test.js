@@ -67,8 +67,8 @@ test('Migrates legacy 0.1 archive and imports its unencrypted backup',async()=>{
  a.schemaVersion=1;delete a.settings.categoryColors;delete a.settings.birthdayDays;delete a.settings.archetypes;delete a.settings.perceptionTags;
  assert.equal(validateArchive(a),true);
  const converted=migrateArchive(a);
- assert.equal(converted.schemaVersion,2);assert.equal(converted.people[0].code,'SCP-015');assert.equal(converted.people[0].colorMode,'custom');assert.equal(converted.people[0].primaryCategory,'Família');assert.equal(validateArchive(converted),true);
- const fromBackup=await parseBackup(plainBackup(a));assert.equal(fromBackup.schemaVersion,2);
+ assert.equal(converted.schemaVersion,3);assert.equal(converted.people[0].code,'SCP-015');assert.equal(converted.people[0].colorMode,'custom');assert.equal(converted.people[0].primaryCategory,'Família');assert.equal(validateArchive(converted),true);
+ const fromBackup=await parseBackup(plainBackup(a));assert.equal(fromBackup.schemaVersion,3);
 });
 test('Encrypted backup contains full history and cannot be decrypted with wrong password',async()=>{
  const a=emptyArchive();const p=saveRecord(a,'people',{codename:'A Raposa',birthDate:'04-19',perceptionTags:['Amizade']});addRelationshipEntry(a,p.id,{self:'48.1',other:'33.9',note:'Um acontecimento privado'});
