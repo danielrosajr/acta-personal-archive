@@ -1,6 +1,6 @@
 # ACTA ◈ Arquivo Narrativo da Vida
 
-**ACTA v0.2.0-alpha — Codex Evolved**
+**ACTA v0.2.1-alpha — Settings & Tutorial Hotfix**
 
 A private-first narrative life archive with acts, chapters, memories, missions and a personal codex of meaningful people.
 
@@ -10,7 +10,7 @@ O ACTA é um aplicativo web **local-first** para narrar a própria vida em atos,
 
 ## Atualização da versão anterior (sem perder o arquivo)
 
-**Antes de atualizar:** abra a v0.1.0-alpha já publicada e exporte um **backup criptografado** em Configurações. Salve-o fora do repositório. Depois envie os arquivos da v0.2.0-alpha para **o mesmo repositório**, mantendo o mesmo endereço/origem, e execute o workflow. O ACTA detecta registros locais antigos (schema 1), migra para **schema 2** e conserva códigos, IDs, capítulos, memórias e aliases. Backups ACTA schema 1 também são aceitos na restauração. A atualização do código pelo GitHub não transfere suas memórias para um novo dispositivo, perfil ou domínio.
+**Antes de atualizar:** abra a v0.1.0-alpha já publicada e exporte um **backup criptografado** em Configurações. Salve-o fora do repositório. Depois envie os arquivos da v0.2.1-alpha para **o mesmo repositório**, mantendo o mesmo endereço/origem, e execute o workflow. O ACTA detecta registros locais antigos (schema 1), migra para **schema 2** e conserva códigos, IDs, capítulos, memórias e aliases. Backups ACTA schema 1 também são aceitos na restauração. A atualização do código pelo GitHub não transfere suas memórias para um novo dispositivo, perfil ou domínio.
 
 **Importante:** migração é automática, mas não substitui o backup prévio. Se o navegador remover dados locais, eles não serão recuperáveis sem backup. Ao migrar, as cores antigas personalizadas são preservadas; selecione “cor por vínculo principal” na ficha para ativar os novos padrões.
 
@@ -22,13 +22,13 @@ O ACTA é um aplicativo web **local-first** para narrar a própria vida em atos,
 - **Símbolos:** biblioteca selecionável de ícones e símbolos, integrada ao formulário da pessoa.
 - **Mitologia pessoal:** arquétipos editáveis (Vlastnyys, Yotunt, Kantionyys, Chiteyavs, Tsuknyys) e tags de percepção personalizáveis, com pesquisa e filtros. Nenhuma avaliação automatizada de terceiros.
 - **Lista de porcentagens:** duas estimativas independentes por pessoa (minha proximidade e reciprocidade que imagino), com valores 0–100%, uma casa decimal; ranking por estimativa ou variação recente, histórico de mudanças e anotações positivas, negativas, neutras e reflexivas. Cada anotação pode referenciar uma memória/evento existente.
-- **Tutorial estendido:** 15 etapas em destaque, com campos de símbolos, cores, categorias, arquétipos e porcentagens, setas ← →, Esc, e retomada por Configurações.
+- **Tutorial estendido:** 15 etapas em destaque, com campos de símbolos, cores, categorias, arquétipos e porcentagens, setas ← →, Esc, e retomada por Configurações ou pelo botão do livro no cabeçalho.
 - **Narrativa:** criar atos com ordem, datas livres, símbolos e status; criar capítulos em atos; associar pessoas a diversos capítulos; navegar entre ficha e capítulo.
 - **Memórias:** registrar texto livre, data aproximada ou em branco, tags, grau de certeza, pessoas e capítulo opcional.
 - **Eventos e missões:** cadastro, edição, exclusão, vínculos, status, prioridade e notas de progresso.
 - **Pesquisa:** em pessoas, atos, capítulos, memórias, eventos e missões por códigos atuais ou anteriores, nomes, codinomes e conteúdo textual. Atalho `Ctrl+K`/`⌘K`.
 - **Privacidade e backup:** IndexedDB, exportação JSON em claro ou backup criptografado com senha (AES-256-GCM + PBKDF2-SHA256), importação validada com confirmação de substituição.
-- **Interface:** dark/light persistente, responsiva, dados fictícios opcionais, tutorial com foco no elemento e setas de navegação.
+- **Interface:** dark/light persistente, responsiva, dados fictícios opcionais, tutorial com foco no elemento e setas de navegação, inicialização automática no primeiro acesso a um arquivo vazio e acesso rápido pelo botão de livro no cabeçalho.
 - **Offline:** service worker pré-armazena recursos básicos após a primeira visita online bem-sucedida; dados ficam no IndexedDB. Offline não é garantido se o navegador limpar o cache, se as permissões de armazenamento falharem ou se os arquivos não forem armazenados corretamente.
 
 ## Tecnologias
@@ -62,7 +62,8 @@ acta-personal-archive/
 │   ├── PUBLICAR-NO-GITHUB.md
 │   ├── TESTES.md
 │   ├── RELEASE-NOTES-v0.1.0-alpha.md
-│   └── RELEASE-NOTES-v0.2.0-alpha.md
+│   ├── RELEASE-NOTES-v0.2.0-alpha.md
+│   └── RELEASE-NOTES-v0.2.1-alpha.md
 ├── ROADMAP.md
 └── CHANGELOG.md
 ```
@@ -125,3 +126,7 @@ Consulte [`ROADMAP.md`](ROADMAP.md), [`CHANGELOG.md`](CHANGELOG.md) e [`docs/TES
 ## Licença
 
 Copyright © 2026 ACTA. **Nenhuma licença de reutilização foi concedida neste pacote.** Escolha e adicione um arquivo `LICENSE` antes de permitir redistribuição, alteração ou contribuições por terceiros. A visibilidade pública do repositório não equivale a conceder uma licença de código aberto.
+
+## Correção rápida para quem já publicou v0.2.0-alpha
+
+Consulte `docs/HOTFIX-v0.2.1.md`. O ZIP de hotfix substitui apenas `src/main.js`, `public/sw.js`, `package.json` e os arquivos de documentação/testes atualizados. Mantenha a mesma URL de publicação; **não apague dados do navegador nem seus backups**.

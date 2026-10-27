@@ -1,4 +1,4 @@
-# ACTA — Testes e verificações (v0.2.0-alpha)
+# ACTA — Testes e verificações (v0.2.1-alpha)
 
 ## O que foi executado no ambiente desta entrega
 
@@ -45,3 +45,10 @@ Os testes principais estão em `src/tests/` e podem ser ampliados com cenários 
 - O mesmo teste isolado foi repetido num viewport móvel de **390 × 844 px**; navegação, formulários, ranking e tutorial funcionaram sem rolagem horizontal.
 - **Limitações:** a montagem de navegador não roda em uma origem HTTP confiável do site: a execução Chromium com URL HTTP/file é bloqueada neste ambiente. Portanto **não foi validada persistência IndexedDB em página servida, migração real de dados do navegador, service worker, `npm run build`, publicação efetiva GitHub Pages**. Testes unitários da migração/backup passaram; verifique integração após publicar. A montagem do navegador testou o estado em memória.
 - `npm run check` verifica testes e sintaxe do código. No GitHub Actions, `npm install`, `npm run check` e `npm run build` são executados no servidor do GitHub.
+
+
+## Verificações adicionais da v0.2.1-alpha
+
+- `npm run check`: **20 testes passaram** (18 anteriores + 2 testes de regressão: contratos dos imports da UI e existência do tutorial), além de checagem de sintaxe.
+- No Chromium, usando montagem isolada dos módulos JS/CSS em `about:blank` devido ao bloqueio HTTP do ambiente, foi verificado: entrada no Dashboard, início automático do guia 01/15, navegação do guia e reinício manual; renderização de Configurações com as 9 cores; salvamento do formulário de preferências; cadastro de pessoa; registro de 56,7% e 44,0% e ranking; **nenhuma exceção JavaScript registrada**.
+- **Não foi testado**: persistência real do IndexedDB em URL servida, build Vite local por falta de dependências em cache (`npm install --offline` → `ENOTCACHED`), cache/service worker em HTTPS e deploy de GitHub Pages. O workflow de GitHub Actions continua verificando testes e build no deploy.

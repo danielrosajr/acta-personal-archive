@@ -22,14 +22,14 @@ Este guia não exige instalar Git nem fazer `git push` pelo terminal. O GitHub A
 
 ## 3. Enviar os arquivos via navegador
 
-**Se está atualizando a v0.1:** antes de substituir os arquivos, acesse o ACTA antigo no mesmo navegador e **exporte um backup criptografado**. A v0.2 converte dados locais antigos automaticamente quando acessada na mesma origem. Atualize/substitua todos os arquivos da pasta `src/`, além dos documentos, `package.json`, `public/sw.js` e os demais arquivos do ZIP; não mescle uma versão antiga de `src/main.js` com o novo modelo.
+**Se está atualizando a v0.1 ou v0.2:** antes de substituir os arquivos, acesse o ACTA antigo no mesmo navegador e **exporte um backup criptografado**. A v0.2 e a v0.2.1 convertem dados locais antigos automaticamente quando acessada na mesma origem. Atualize/substitua todos os arquivos da pasta `src/`, além dos documentos, `package.json`, `public/sw.js` e os demais arquivos do ZIP; não mescle uma versão antiga de `src/main.js` com o novo modelo.
 
 1. Extraia o arquivo ZIP em seu computador.
 2. Abra o novo repositório em `https://github.com/USUARIO/acta-personal-archive`.
 3. Clique em **Add file → Upload files**.
 4. Arraste **o conteúdo de dentro da pasta extraída** para a tela de upload — `index.html`, `package.json`, `vite.config.js`, `src/`, `public/`, `docs/`, `README.md`, `CHANGELOG.md`, `ROADMAP.md` etc.
 5. Confirme que a pasta **`.github/workflows/deploy.yml`** também foi enviada. Em alguns gerenciadores, pastas iniciadas com `.` ficam ocultas; use `Ctrl+H` no Linux para mostrar arquivos ocultos. Se o upload não trouxer `.github`, vá em **Add file → Create new file**, escreva o caminho `.github/workflows/deploy.yml` e cole o conteúdo do arquivo fornecido.
-6. No campo de mensagem de commit, cole: `feat: expand ACTA Codex with relationship history and personal mythology`.
+6. No campo de mensagem de commit, cole: `fix: restore Codex Settings and guided tutorial`.
 7. Selecione **Commit directly to the main branch** e confirme.
 
 **Nunca envie** backups `.acta`, arquivos JSON pessoais, `node_modules`, `dist`, banco de dados local ou fotos privadas exportadas.
@@ -118,3 +118,8 @@ Substitua os arquivos modificados usando **Upload files**, faça um commit `feat
 - GitHub Pages: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
 - GitHub workflow personalizado: https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
 - Vite estático em GitHub Pages: https://vite.dev/guide/static-deploy.html
+
+
+## Atualização específica: v0.2.0-alpha → v0.2.1-alpha
+
+Para corrigir a página de Configurações e o tutorial, siga `HOTFIX-v0.2.1.md`. Não é necessário recriar o repositório, migrar o banco ou apagar os dados do navegador.

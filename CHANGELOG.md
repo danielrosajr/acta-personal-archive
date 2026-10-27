@@ -2,6 +2,19 @@
 
 Todos os marcos futuros são planejados e podem mudar após testes.
 
+## [0.2.1-alpha] — 2026-10-26 — Settings & Tutorial Hotfix
+
+### Corrigido
+- Corrigido `ReferenceError: CATEGORIES is not defined`: import explícito no `src/main.js`. Isso impedia a renderização de **Configurações** e **ACTA Codex**.
+- Tutorial de primeira execução agora abre automaticamente para arquivos novos e vazios, em vez de mostrar apenas uma notificação.
+- O tutorial também pode ser aberto pelo novo ícone de livro no cabeçalho, mesmo quando Configurações não estiver aberta.
+- Service worker recebeu um novo identificador de cache para buscar os arquivos públicos da correção.
+- 2 testes de regressão adicionados para verificar contratos de importação e presença do tutorial.
+
+### Compatibilidade
+- Sem mudanças de schema. Nenhuma conversão de dados é necessária na atualização v0.2.0 → v0.2.1.
+- Registros permanecem no IndexedDB da mesma origem e do mesmo perfil de navegador. Recomenda-se backup antes de atualizar.
+
 ## [0.2.0-alpha] — 2026-10-26 — Codex Evolved
 
 ### Adicionado

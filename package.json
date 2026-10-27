@@ -1,7 +1,7 @@
 {
   "name": "acta-personal-archive",
   "private": true,
-  "version": "0.2.0-alpha",
+  "version": "0.2.1-alpha",
   "type": "module",
   "description": "A private-first narrative life archive with acts, chapters, memories, missions and a personal codex.",
   "scripts": {
